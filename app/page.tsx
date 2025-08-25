@@ -1,46 +1,25 @@
 "use client";
 
-import { ToggleTheme } from "@/components/ui/toggle-theme";
-import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
-import { SignInButton, UserButton } from "@clerk/nextjs";
-import {
-  Authenticated,
-  AuthLoading,
-  Unauthenticated,
-  useMutation,
-  useQuery,
-} from "convex/react";
+import {  useQuery } from "convex/react";
+import DocumentCard from "./document-card";
+import CreateDocumentButton from "./create-document-button";
 
 export default function Home() {
-  const createDocuments = useMutation(api.documents.createDocuments);
 
   const documents = useQuery(api.documents.getDocuments);
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <Unauthenticated>
-        <SignInButton mode="modal" />
-      </Unauthenticated>
-      <Authenticated>
-        <UserButton />
-        <Button
-          onClick={() => {
-            createDocuments({ title: "hello world" });
-          }}
-        >
-          click me
-        </Button>
-      </Authenticated>
-      <AuthLoading>
-        <p>loading...</p>
-      </AuthLoading>
-      <div>
-        {documents?.map((doc) => (
-          <p key={doc._id}>{doc.title}</p>
-        ))}
+    <main className="font-sans p-24 space-y-8 sm:p-20">
+      <div className="flex justify-between items-center">
+        <h1 className="text-4xl font-bold">My Documents</h1>
+        <CreateDocumentButton />
       </div>
 
-        <ToggleTheme />
-    </div>
+      <div className="grid grid-cols-4 gap-8">
+        {documents?.map((doc) => (
+          <DocumentCard key={doc._id} document={doc} />
+        ))}
+      </div>
+    </main>
   );
 }
