@@ -32,11 +32,11 @@ export default function Home() {
       <AuthLoading>
         <p>loading...</p>
       </AuthLoading>
-      <p>
+      <div>
         {documents?.map((doc) => (
           <p key={doc._id}>{doc.title}</p>
         ))}
-      </p>
+      </div>
     </div>
   );
 }
