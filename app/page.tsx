@@ -1,5 +1,7 @@
 "use client";
 
+import { ToggleTheme } from "@/components/ui/toggle-theme";
+import { Button } from "@/components/ui/button";
 import { api } from "@/convex/_generated/api";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import {
@@ -21,13 +23,13 @@ export default function Home() {
       </Unauthenticated>
       <Authenticated>
         <UserButton />
-        <button
+        <Button
           onClick={() => {
             createDocuments({ title: "hello world" });
           }}
         >
           click me
-        </button>
+        </Button>
       </Authenticated>
       <AuthLoading>
         <p>loading...</p>
@@ -37,6 +39,8 @@ export default function Home() {
           <p key={doc._id}>{doc.title}</p>
         ))}
       </div>
+
+        <ToggleTheme />
     </div>
   );
 }
